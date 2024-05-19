@@ -10,6 +10,6 @@ public class AppointmentState
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public Guid AppointmentId { get; set; }
-    public Appointment Appointment { get; set; }
+    public Appointment Appointment { get; set; } = null!;
 
 };

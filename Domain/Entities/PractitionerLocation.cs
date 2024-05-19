@@ -7,6 +7,6 @@ public class PractitionerLocation
     public double Lattitude { get; set; }
     public double Longitude { get; set; }
     public Guid PractitionerId { get; set; }
-    public Practitioner Practitioner { get; set; }
+    public Practitioner Practitioner { get; set; } = null!;
 
 };

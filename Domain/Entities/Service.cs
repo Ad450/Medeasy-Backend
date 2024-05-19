@@ -6,8 +6,6 @@ public class Service
     public string Name { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public Guid PractitionerId { get; set; }
-    public Practitioner Practitioner { get; set; }
-
-    public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public ICollection<Practitioner> Practitioners { get; set; } = [];
+    public ICollection<Appointment> Appointments { get; set; } = [];
 }

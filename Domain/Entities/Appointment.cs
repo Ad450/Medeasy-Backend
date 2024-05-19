@@ -1,4 +1,3 @@
-using Domain.Enum;
 
 namespace Domain.Entities;
 
@@ -9,9 +8,9 @@ public class Appointment
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public Guid PractitionerId { get; set; }
-    public Practitioner Practitioner { get; set; }
+    public Practitioner Practitioner { get; set; } = null!;
     public Guid ServiceId { get; set; }
-    public Service Service { get; set; }
+    public Service Service { get; set; } = null!;
     public Guid PatientId { get; set; }
-    public Patient Patient { get; set; }
+    public Patient Patient { get; set; } = null!;
 }

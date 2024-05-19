@@ -10,6 +10,6 @@ public class Kyc
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public Guid PatientId { get; set; }
-    public Practitioner Practitioner { get; set; }
+    public Practitioner Practitioner { get; set; } = null!;
 
 };

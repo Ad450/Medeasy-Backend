@@ -6,5 +6,5 @@ public class PractitionerProfilePicture
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public Guid PractitionerId { get; set; }
-    public Practitioner Practitioner { get; set; }
+    public Practitioner Practitioner { get; set; } = null!;
 }
