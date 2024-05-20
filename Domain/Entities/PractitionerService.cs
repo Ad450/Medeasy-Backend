@@ -1,6 +1,6 @@
 namespace Domain.Entities;
 
-public class PatientService
+public class PractitionerService
 {
     public Guid PractitionerId { get; set; }
     public Practitioner Practitioner { get; set; } = null!;

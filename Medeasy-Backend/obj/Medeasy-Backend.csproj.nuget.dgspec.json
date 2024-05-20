@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend.csproj": {}
+    "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/Medeasy-Backend.csproj": {}
   },
   "projects": {
-    "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend.csproj": {
+    "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/Medeasy-Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend.csproj",
+        "projectUniqueName": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/Medeasy-Backend.csproj",
         "projectName": "Medeasy-Backend",
-        "projectPath": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend.csproj",
+        "projectPath": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/Medeasy-Backend.csproj",
         "packagesPath": "/Users/duncan/.nuget/packages/",
-        "outputPath": "/Users/duncan/remotown/Medeasy-Backend/obj/",
+        "outputPath": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/duncan/.nuget/NuGet/NuGet.Config"
