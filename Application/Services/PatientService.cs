@@ -14,7 +14,7 @@ public class PatientService(
     IBaseRepository<PatientLocation> _patientLocationRepository
 ) : IPatientService
 {
-    public async Task CreatePatient(CreatePatientDto dto)
+    public async Task<Guid> CreatePatient(CreatePatientDto dto)
     {
         var newPatient = new Patient
         {
@@ -35,7 +35,7 @@ public class PatientService(
             var patientLocation = new PatientLocation { LocationName = dto.LocationName, Patient = newPatient };
             await _patientLocationRepository.Save(patientLocation);
         }
-        return;
+        return newPatient.Id;
 
     }
 
