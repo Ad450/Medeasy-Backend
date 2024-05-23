@@ -6,8 +6,7 @@ public class Patient
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public int Age { get; set; }
-
-    public PatientProfilePicture ProfilePicture { get; set; } = null!;
-    public PatientLocation Location { get; set; } = null!;
+    public PatientProfilePicture? ProfilePicture { get; set; }
+    public PatientLocation? Location { get; set; }
     public ICollection<Appointment> Appointments { get; set; } = [];
 }
