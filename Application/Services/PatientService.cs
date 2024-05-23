@@ -54,9 +54,9 @@ public class PatientService(
 
         if (dto.pageNumber != null && dto.pageNumber != null)
         {
-            var skip = (dto.pageNumber! - 1) * dto!.pageSize!;
+            var skip = (dto.pageNumber - 1) * dto.pageSize;
             query = query
-                        .Skip((int)skip)
+                        .Skip((int)skip!)
                         .Take((int)dto.pageSize!);
         }
 
