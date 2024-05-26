@@ -11,7 +11,7 @@ namespace Application.Services;
 
 public class AppointmentService(
     IBaseRepository<Appointment> _appointmentRepository,
-     IBaseRepository<Patient> _patientRepository,
+    IBaseRepository<Patient> _patientRepository,
     IBaseRepository<Practitioner> _practitionerRepository,
     IBaseRepository<Day> _dayRepository,
     IBaseRepository<Service> _serviceRepository,
@@ -26,7 +26,7 @@ public class AppointmentService(
 
             var patient = await _patientRepository.GetById(dto.PatientId)
                 ?? throw new Exception("patient not found");
-            var practioner = await _practitionerRepository.GetById(dto.PractitionerId)
+            var practitioner = await _practitionerRepository.GetById(dto.PractitionerId)
                 ?? throw new Exception("practitioner not found");
             var day = await _dayRepository.GetById(dto.DayId)
                 ?? throw new Exception("day not found");
@@ -37,7 +37,7 @@ public class AppointmentService(
             {
                 Name = dto.Name,
                 Patient = patient,
-                Practitioner = practioner,
+                Practitioner = practitioner,
                 Day = day,
                 Service = service,
                 AppointmentState = new AppointmentState { AppointmentStatus = AppointmentStatus.CREATED }

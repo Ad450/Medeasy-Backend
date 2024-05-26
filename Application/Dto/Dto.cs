@@ -51,3 +51,13 @@ public record UpdateAppointmentStateDto
     Guid AppointmentId,
     AppointmentStatus status
 );
+
+public record CreateDaysDto(
+    ICollection<CreateDayParam> Days
+);
+
+public record CreateDayParam(
+ DayOfWeek DayOfWeek,
+ int WeekNumber,
+ Guid PractitionerId
+);
