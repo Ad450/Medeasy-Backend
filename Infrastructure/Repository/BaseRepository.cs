@@ -1,6 +1,12 @@
 
+using System.Formats.Asn1;
 using System.Linq.Expressions;
+using System.Reflection;
 using Infrastructure.MeadeasyDbContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 
 namespace Infrastructure.Repository;
@@ -30,6 +36,11 @@ public class BaseRepository<T>(MedeasyContext context) : IBaseRepository<T> wher
         ?? throw new Exception(message: "No match for id");
     }
 
+    public MedeasyContext GetContext()
+    {
+        return context;
+    }
+
     public async Task Save(T entity)
     {
         try
@@ -43,4 +54,22 @@ public class BaseRepository<T>(MedeasyContext context) : IBaseRepository<T> wher
         }
     }
 
+    // public async Task Update(T entity) {
+
+    //     ICollection<SetPropertyCalls<object>> setPropertyCalls = [];
+    //     Type type= typeof(T);
+    //     var properties = type.GetProperties();
+
+    //     foreach (PropertyInfo property in properties) {
+    //         setPropertyCalls.Add(e)
+    //     }
+    //     var Id = entity.GetType().GetProperty("Id")?.GetValue(entity);
+    //     var result = await GetById((Guid)Id!);
+
+    // } 
+
+    public async Task Update()
+    {
+        await context.SaveChangesAsync();
+    }
 }
