@@ -21,3 +21,6 @@ public record CreatePractitionerDto(
 
 public record GetPractitionerByIdDto(Guid Id);
 public record GetAllPractitionersDto(string? searchTerm, int? pageSize, int? pageNumber, string orderBy);
+
+
+public record VerifyKycDto();

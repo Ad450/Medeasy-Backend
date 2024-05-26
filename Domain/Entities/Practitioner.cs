@@ -11,4 +11,5 @@ public class Practitioner
     public PractitionerLocation? Location { get; set; }
     public ICollection<Service> Services { get; set; } = [];
     public ICollection<Appointment> Appointments { get; set; } = [];
+    public ICollection<Day> Days { get; set; } = [];
 }

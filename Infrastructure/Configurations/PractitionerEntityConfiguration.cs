@@ -15,6 +15,9 @@ public class PractitionerEntityTypeConfiguration : IEntityTypeConfiguration<Prac
         builder.HasMany(x => x.Appointments).WithOne(a => a.Practitioner)
         .HasForeignKey(a => a.Practitioner);
 
+        builder.HasMany(x => x.Days).WithOne(d => d.Practitioner)
+        .HasForeignKey(d => d.Practitioner);
+
         builder.HasMany(x => x.Services).WithMany(a => a.Practitioners)
         .UsingEntity<PractitionerService>("PractitionerService");
     }

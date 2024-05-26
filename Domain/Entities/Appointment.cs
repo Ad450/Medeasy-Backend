@@ -7,11 +7,13 @@ public class Appointment
     public string Name { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public AppointmentState AppointmentState { get; set; } = null!;
+    public AppointmentState? AppointmentState { get; set; }
     public Guid PractitionerId { get; set; }
-    public Practitioner Practitioner { get; set; } = null!;
+    public Practitioner? Practitioner { get; set; }
     public Guid ServiceId { get; set; }
-    public Service Service { get; set; } = null!;
+    public Service? Service { get; set; }
     public Guid PatientId { get; set; }
-    public Patient Patient { get; set; } = null!;
+    public Patient? Patient { get; set; }
+    public Guid DayId { get; set; }
+    public Day? Day { get; set; }
 }

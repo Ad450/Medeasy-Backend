@@ -20,6 +20,9 @@ public class AppointmentEntityTypeConfiguration : IEntityTypeConfiguration<Appoi
         builder.HasOne(a => a.Service).WithMany(s => s.Appointments)
         .HasForeignKey(a => a.ServiceId);
 
+        builder.HasOne(a => a.Day).WithMany(d => d.Appointments)
+        .HasForeignKey(a => a.DayId);
+
         builder.HasOne(a => a.AppointmentState).WithOne(s => s.Appointment)
         .HasForeignKey<AppointmentState>(a => a.AppointmentId);
 
