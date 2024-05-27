@@ -5,10 +5,10 @@ namespace Application.Interfaces;
 
 public interface IPatientService
 {
-    Task<Guid> CreatePatient(CreatePatientDto dto);
-    Task<Patient> GetPatientById(GetPatientByIdDto dto);
-    IList<Patient> GetAllPatients(GetAllPatientsDto dto);
+    public Task<Guid> CreatePatient(CreatePatientDto dto);
+    public Task<Patient> GetPatientById(GetPatientByIdDto dto);
+    public IList<Patient> GetAllPatients(GetAllPatientsDto dto);
 
-    Task UpdateProfilePicture(UpdateProfilePictureDto dto);
-    Task UpdatePatientLocation(UpdateLocationDto dto);
+    public Task UpdateProfilePicture(UpdateProfilePictureDto dto);
+    public Task UpdatePatientLocation(UpdateLocationDto dto);
 }

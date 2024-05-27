@@ -54,6 +54,10 @@ public record CreateAppointmentDto(
 
 public record GetAppointmentByIdDto(Guid Id);
 
+public record GetAllPractitionerAppointmentsDto(Guid Id);
+
+public record GetAllPatientAppointmentsDto(Guid Id);
+
 public record UpdateAppointmentDto(
     Guid AppointmentId,
     Guid? PractitionerId,

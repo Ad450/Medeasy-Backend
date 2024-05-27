@@ -4,5 +4,5 @@ namespace Application.Interfaces;
 
 public interface IKycService
 {
-    Task Verify(VerifyKycDto dto);
+    public Task Verify(VerifyKycDto dto);
 }

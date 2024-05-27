@@ -5,12 +5,12 @@ namespace Application.Interfaces;
 
 public interface IPractitionerService
 {
-    Task<Guid> CreatePractitioner(CreatePractitionerDto dto);
-    Task<Practitioner> GetPractitionerById(GetPractitionerByIdDto dto);
-    IList<Practitioner> GetAllPractitioners(GetAllPractitionersDto dto);
+    public Task<Guid> CreatePractitioner(CreatePractitionerDto dto);
+    public Task<Practitioner> GetPractitionerById(GetPractitionerByIdDto dto);
+    public IList<Practitioner> GetAllPractitioners(GetAllPractitionersDto dto);
 
-    Task UpdateProfilePicture(UpdateProfilePictureDto dto);
-    Task UpdatePractitionerLocation(UpdateLocationDto dto);
+    public Task UpdateProfilePicture(UpdateProfilePictureDto dto);
+    public Task UpdatePractitionerLocation(UpdateLocationDto dto);
 
-    Task<ICollection<Service>> GetPractitionerServices(GetPractitionerServicesDto dto);
+    public Task<ICollection<Service>> GetPractitionerServices(GetPractitionerServicesDto dto);
 }

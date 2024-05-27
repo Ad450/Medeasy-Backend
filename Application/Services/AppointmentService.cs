@@ -23,7 +23,6 @@ public class AppointmentService(
         using var transaction = await _appointmentRepository.GetContext().Database.BeginTransactionAsync();
         try
         {
-
             var patient = await _patientRepository.GetById(dto.PatientId)
                 ?? throw new Exception("patient not found");
             var practitioner = await _practitionerRepository.GetById(dto.PractitionerId)
@@ -58,9 +57,14 @@ public class AppointmentService(
         }
     }
 
-    public IList<Appointment> GetAll()
+    public IList<Appointment> GetAllPractitionerAppointments(GetAllPractitionerAppointmentsDto dto)
     {
-        return [.. _appointmentRepository.GetAll()];
+        return [.. _appointmentRepository.GetAll().Where(a => a.PractitionerId == dto.Id)];
+    }
+
+    public IList<Appointment> GetAllPatientAppointments(GetAllPatientAppointmentsDto dto)
+    {
+        return [.. _appointmentRepository.GetAll().Where(a => a.PatientId == dto.Id)];
     }
 
     public async Task<Appointment> GetAppointmentById(GetAppointmentByIdDto dto)
