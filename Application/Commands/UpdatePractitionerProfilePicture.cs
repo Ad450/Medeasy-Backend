@@ -6,7 +6,7 @@ namespace Application.Commands;
 
 public class UpdatePractitionerProfileCommand(UpdateProfilePictureDto dto) : IRequest<Unit>
 {
-    public UpdateProfilePictureDto Param = dto;
+    public UpdateProfilePictureDto Param { get; } = dto;
 }
 
 

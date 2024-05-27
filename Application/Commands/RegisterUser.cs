@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class RegisterUserCommand(AuthDto authDto) : IRequest<Unit>
 {
-    public AuthDto Param = authDto;
+    public AuthDto Param { get; } = authDto;
 }
 
 

@@ -9,7 +9,7 @@ namespace Application.Queries;
 
 public class GetAllPatientsQuery(GetAllPatientsDto dto) : IRequest<IList<Patient>>
 {
-    public GetAllPatientsDto Param = dto;
+    public GetAllPatientsDto Param { get; } = dto;
 }
 
 public class GetAllPatientsHandler(IPatientService _patientService) : IRequestHandler<GetAllPatientsQuery, IList<Patient>>

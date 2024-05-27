@@ -8,7 +8,7 @@ namespace Application.Queries;
 
 public class GetAllPatientAppointmentsQuery(GetAllPatientAppointmentsDto dto) : IRequest<IList<Appointment>>
 {
-    public GetAllPatientAppointmentsDto Param = dto;
+    public GetAllPatientAppointmentsDto Param { get; } = dto;
 }
 
 public class GetAllPatientAppointmentsHandler(IAppointmentService _appointmentService) : IRequestHandler<GetAllPatientAppointmentsQuery, IList<Appointment>>

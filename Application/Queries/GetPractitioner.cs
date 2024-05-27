@@ -7,7 +7,7 @@ namespace Application.Queries;
 
 public class GetPractitionerQuery(GetPractitionerByIdDto dto) : IRequest<Practitioner>
 {
-    public GetPractitionerByIdDto Param = dto;
+    public GetPractitionerByIdDto Param { get; } = dto;
 }
 
 public class GetPractitionerHandler(IPractitionerService _practitionerService) : IRequestHandler<GetPractitionerQuery, Practitioner>

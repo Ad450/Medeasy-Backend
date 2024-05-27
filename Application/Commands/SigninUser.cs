@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class SigninUserCommand(AuthDto authDto) : IRequest<string>
 {
-    public AuthDto Param = authDto;
+    public AuthDto Param { get; } = authDto;
 }
 
 

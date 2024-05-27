@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class CreateAppointmentCommand(CreateAppointmentDto dto) : IRequest<Guid>
 {
-    public CreateAppointmentDto Param = dto;
+    public CreateAppointmentDto Param { get; } = dto;
 }
 
 

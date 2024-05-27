@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class UpdatePractitionerLocationCommand(UpdateLocationDto dto) : IRequest<Unit>
 {
-    public UpdateLocationDto Param = dto;
+    public UpdateLocationDto Param { get; } = dto;
 }
 
 

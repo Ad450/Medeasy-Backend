@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class UpdateAppointmentStateCommand(UpdateAppointmentStateDto dto) : IRequest<Unit>
 {
-    public UpdateAppointmentStateDto Param = dto;
+    public UpdateAppointmentStateDto Param { get; } = dto;
 }
 
 

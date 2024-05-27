@@ -7,7 +7,7 @@ namespace Application.Queries;
 
 public class GetDaysQuery(GetDaysDto dto) : IRequest<ICollection<Day>>
 {
-    public GetDaysDto Param = dto;
+    public GetDaysDto Param { get; } = dto;
 }
 
 public class GeDaysHandler(IDayService _dayService) : IRequestHandler<GetDaysQuery, ICollection<Day>>

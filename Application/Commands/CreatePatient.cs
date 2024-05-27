@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class CreatePatientCommand(CreatePatientDto dto) : IRequest<Guid>
 {
-    public CreatePatientDto Param = dto;
+    public CreatePatientDto Param { get; } = dto;
 }
 
 

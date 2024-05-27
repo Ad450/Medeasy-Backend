@@ -6,7 +6,7 @@ namespace Application.Commands;
 
 public class CreatePractitionerCommand(CreatePractitionerDto dto) : IRequest<Guid>
 {
-    public CreatePractitionerDto Param = dto;
+    public CreatePractitionerDto Param { get; } = dto;
 }
 
 

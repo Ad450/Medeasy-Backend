@@ -7,7 +7,7 @@ namespace Application.Commands;
 
 public class CreateDaysCommand(CreateDaysDto dto) : IRequest<Unit>
 {
-    public CreateDaysDto Param = dto;
+    public CreateDaysDto Param { get; } = dto;
 }
 
 
