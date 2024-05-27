@@ -85,7 +85,6 @@ public class AppointmentService(
     {
         try
         {
-
             var appointment = await _appointmentRepository.GetById(dto.AppointmentId)
                 ?? throw new Exception("appointment not found");
             var appointmentState = await _appointmentStateRepository.GetByCondition((a) => a.AppointmentId == dto.AppointmentId)

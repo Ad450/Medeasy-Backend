@@ -8,4 +8,7 @@ public interface IPatientService
     Task<Guid> CreatePatient(CreatePatientDto dto);
     Task<Patient> GetPatientById(GetPatientByIdDto dto);
     IList<Patient> GetAllPatients(GetAllPatientsDto dto);
+
+    Task UpdateProfilePicture(UpdateProfilePictureDto dto);
+    Task UpdatePatientLocation(UpdateLocationDto dto);
 }

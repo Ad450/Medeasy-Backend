@@ -63,7 +63,6 @@ public class AuthenticationService(UserManager<MedeasyUser> _userManager, IConfi
         {
             if (role != null)
             {
-
                 claims[ClaimTypes.Role] = role;
             }
         }

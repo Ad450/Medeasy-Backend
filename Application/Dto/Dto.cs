@@ -10,6 +10,8 @@ public record CreatePatientDto(
     string ProfilePicUrl,
     string LocationName
  );
+
+
 public record GetPatientByIdDto(Guid Id);
 public record GetAllPatientsDto(string? searchTerm, int? pageSize, int? pageNumber, string orderBy);
 
@@ -23,6 +25,19 @@ public record CreatePractitionerDto(
 
 public record GetPractitionerByIdDto(Guid Id);
 public record GetAllPractitionersDto(string? searchTerm, int? pageSize, int? pageNumber, string orderBy);
+
+public record GetPractitionerServicesDto(Guid Id);
+public record UpdateLocationDto(
+    Guid Id,
+    string LocationName,
+    double? Lat,
+    double? Long
+);
+
+public record UpdateProfilePictureDto(
+    Guid Id,
+    string ProfilePicUrl
+);
 
 
 public record VerifyKycDto();
@@ -61,3 +76,4 @@ public record CreateDayParam(
  int WeekNumber,
  Guid PractitionerId
 );
+

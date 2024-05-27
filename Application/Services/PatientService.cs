@@ -1,10 +1,12 @@
 using System.Data.Common;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using Application.Dto;
 using Application.Interfaces;
 using Application.Utils;
 using Domain.Entities;
 using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services;
 
@@ -76,5 +78,26 @@ public class PatientService(
     public async Task<Patient> GetPatientById(GetPatientByIdDto dto)
     {
         return await _patientRepository.GetById(dto.Id);
+    }
+
+    public async Task UpdateProfilePicture(UpdateProfilePictureDto dto)
+    {
+        var profilePicture = await _patientProfileRepository.GetByCondition((p) => p.PatientId == dto.Id).FirstOrDefaultAsync()
+             ?? throw new Exception("profile picture could not be retrieved");
+
+        profilePicture.PictureUrl = dto.ProfilePicUrl;
+        await _patientProfileRepository.Update();
+    }
+
+    public async Task UpdatePatientLocation(UpdateLocationDto dto)
+    {
+        var location = await _patientLocationRepository.GetByCondition((p) => p.PatientId == dto.Id).FirstOrDefaultAsync()
+              ?? throw new Exception("Location could not be retrieved");
+
+        location.LocationName = dto.LocationName;
+        if (dto.Lat != null) location.Lattitude = (double)dto.Lat!;
+        if (dto.Long != null) location.Longitude = (double)dto.Long!;
+
+        await _patientProfileRepository.Update();
     }
 }

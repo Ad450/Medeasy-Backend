@@ -5,6 +5,7 @@ using Application.Interfaces;
 using Application.Utils;
 using Domain.Entities;
 using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services;
 
@@ -12,7 +13,6 @@ public class PractitionerService(
     IBaseRepository<Practitioner> _practitionerRepository,
     IBaseRepository<PractitionerLocation> _practitionerLocationRepository,
     IBaseRepository<PractitionerProfilePicture> _practitionerProfilePictureRepository
-
 ) : IPractitionerService
 {
     public async Task<Guid> CreatePractitioner(CreatePractitionerDto dto)
@@ -47,7 +47,6 @@ public class PractitionerService(
                     dto.searchTerm, ["FirstName", "Age", "LastName"]
                 )) : _practitionerRepository.GetAll();
 
-
         if (dto.pageNumber != null && dto.pageNumber != null)
         {
             var skip = (dto.pageNumber - 1) * dto.pageSize;
@@ -72,5 +71,33 @@ public class PractitionerService(
     public async Task<Practitioner> GetPractitionerById(GetPractitionerByIdDto dto)
     {
         return await _practitionerRepository.GetById(dto.Id);
+    }
+
+    public async Task UpdateProfilePicture(UpdateProfilePictureDto dto)
+    {
+        var profilePicture = await _practitionerProfilePictureRepository.GetByCondition((p) => p.PractitionerId == dto.Id).FirstOrDefaultAsync()
+             ?? throw new Exception("profile picture could not be retrieved");
+
+        profilePicture.PictureUrl = dto.ProfilePicUrl;
+        await _practitionerProfilePictureRepository.Update();
+    }
+
+    public async Task UpdatePractitionerLocation(UpdateLocationDto dto)
+    {
+        var location = await _practitionerLocationRepository.GetByCondition((p) => p.PractitionerId == dto.Id).FirstOrDefaultAsync()
+              ?? throw new Exception("Location could not be retrieved");
+
+        location.LocationName = dto.LocationName;
+        if (dto.Lat != null) location.Lattitude = (double)dto.Lat!;
+        if (dto.Long != null) location.Longitude = (double)dto.Long!;
+
+        await _practitionerLocationRepository.Update();
+    }
+
+    public async Task<ICollection<Service>> GetPractitionerServices(GetPractitionerServicesDto dto)
+    {
+        var practitioner = await _practitionerRepository.GetById(dto.Id)
+             ?? throw new Exception("practitioner not found");
+        return practitioner.Services;
     }
 }
