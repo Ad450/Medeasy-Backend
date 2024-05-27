@@ -5,7 +5,7 @@ using Domain.Entities;
 using Infrastructure.Repository;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
-
+using System.Reflection.Metadata;
 
 namespace Application.Services;
 
@@ -56,6 +56,17 @@ public class AppointmentService(
         {
             await transaction.DisposeAsync();
         }
+    }
+
+    public IList<Appointment> GetAll()
+    {
+        return [.. _appointmentRepository.GetAll()];
+    }
+
+    public async Task<Appointment> GetAppointmentById(GetAppointmentByIdDto dto)
+    {
+        return await _appointmentRepository.GetById(dto.Id)
+            ?? throw new Exception("appointment not found");
     }
 
     public async Task Update(UpdateAppointmentDto dto)

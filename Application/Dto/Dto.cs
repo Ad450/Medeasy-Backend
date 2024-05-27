@@ -52,6 +52,8 @@ public record CreateAppointmentDto(
     string Name
 );
 
+public record GetAppointmentByIdDto(Guid Id);
+
 public record UpdateAppointmentDto(
     Guid AppointmentId,
     Guid? PractitionerId,
@@ -70,6 +72,7 @@ public record UpdateAppointmentStateDto
 public record CreateDaysDto(
     ICollection<CreateDayParam> Days
 );
+public record GetDaysDto(Guid PractitionerId);
 
 public record CreateDayParam(
  DayOfWeek DayOfWeek,

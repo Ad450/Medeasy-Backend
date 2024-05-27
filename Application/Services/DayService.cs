@@ -41,8 +41,8 @@ public class DayService(
         }
     }
 
-    public ICollection<Day> GetDays()
+    public ICollection<Day> GetDays(GetDaysDto dto)
     {
-        return [.. _dayRepository.GetAll()];
+        return [.. _dayRepository.GetAll().Where((d) => d.PractitionerId == dto.PractitionerId)];
     }
 }
