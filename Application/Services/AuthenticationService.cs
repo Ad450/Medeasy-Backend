@@ -3,6 +3,7 @@ using System.Text;
 using Application.Dto;
 using Application.Interfaces;
 using Domain.Entities;
+using Domain.Enum;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -26,9 +27,9 @@ public class AuthenticationService(UserManager<MedeasyUser> _userManager, IConfi
 
         if (result.Succeeded)
         {
-            foreach (string role in authDto.roles)
+            foreach (UserRole role in authDto.Roles)
             {
-                await _userManager.AddToRoleAsync(newUser, role);
+                await _userManager.AddToRoleAsync(newUser, role.ToString());
             }
         }
         return;

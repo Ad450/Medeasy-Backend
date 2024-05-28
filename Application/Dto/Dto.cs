@@ -2,7 +2,7 @@ using Domain.Enum;
 
 namespace Application.Dto;
 
-public record AuthDto(string email, string password, IList<string> roles);
+public record AuthDto(string email, string password, IList<UserRole> Roles);
 public record CreatePatientDto(
     string FirstName,
     string LastName,

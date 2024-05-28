@@ -1,6 +1,14 @@
+using Medeasy_Backend.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddMedeasyBackendExtensions(builder.Configuration);
+
+builder.Services.AddMedeasyBackendAuthentication(builder.Configuration);
+
+builder.Services.AddMedeasyBackendAuthorization(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,8 +32,3 @@ app.MapControllers();
 
 app.Run();
 
-//TODO
-// add domain , application and infrastructure extensions
-// Configure database connection
-// Add mediator to Service collection
-// Add jwt authentication and authorization
