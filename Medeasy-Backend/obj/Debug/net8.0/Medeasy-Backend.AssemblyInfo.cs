@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Medeasy-Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+367d16d9230e382997680e60254a656337cf6ad2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57de7b56dded90e48dc112fdc50e8032a457c94f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Medeasy-Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Medeasy-Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
