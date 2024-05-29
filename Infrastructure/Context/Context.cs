@@ -2,6 +2,7 @@ using Domain.Entities;
 using Infrastructure.Configurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 
 namespace Infrastructure.Context;
@@ -39,8 +40,12 @@ namespace Infrastructure.Context;
 
 public class MedeasyDbContext : IdentityDbContext<MedeasyUser, MedeasyRole, Guid>
 {
+    private readonly IConfiguration _configuration;
     public MedeasyDbContext() { }
-    public MedeasyDbContext(DbContextOptions<MedeasyDbContext> options) : base(options) { }
+    public MedeasyDbContext(DbContextOptions<MedeasyDbContext> options, IConfiguration configuration) : base(options)
+    {
+        _configuration = configuration;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -53,11 +58,10 @@ public class MedeasyDbContext : IdentityDbContext<MedeasyUser, MedeasyRole, Guid
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("user id = duncan; password = manu ; database = medeasy; host = localhost;");
+            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("MedeasyConnectionString"));
 
         }
     }
-
 
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Practitioner> Practitioners { get; set; }
