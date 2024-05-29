@@ -1,3 +1,5 @@
+
+using Infrastructure.Context;
 using Medeasy_Backend.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddMedeasyBackendExtensions(builder.Configuration);
+// builder.Services.ConfigureDBContext(builder.Configuration);
+
+builder.Services.AddDbContext<MedeasyDbContext>();
+
+builder.Services.ConfigureIdentity(builder.Configuration);
 
 builder.Services.AddMedeasyBackendAuthentication(builder.Configuration);
 

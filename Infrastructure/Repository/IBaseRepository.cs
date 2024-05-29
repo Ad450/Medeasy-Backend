@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Infrastructure.MeadeasyDbContext;
+using Infrastructure.Context;
 
 namespace Infrastructure.Repository;
 
@@ -13,5 +13,5 @@ public interface IBaseRepository<T>
     public Task Delete(T entity);
     public Task Update();
 
-    public MedeasyContext GetContext();
+    public MedeasyDbContext GetContext();
 }

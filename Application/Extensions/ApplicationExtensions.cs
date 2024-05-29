@@ -1,3 +1,4 @@
+using Application.Commands;
 using Application.Interfaces;
 using Application.Services;
 using MediatR;
@@ -9,14 +10,14 @@ public static class ApplicationExtensions
 {
     public static IServiceCollection AddApplicationExtensions(this IServiceCollection service)
     {
-        service.AddSingleton<IAppointmentService, AppointmentService>();
-        service.AddSingleton<IDayService, DayService>();
-        service.AddSingleton<IAuthenticationService, AuthenticationService>();
-        service.AddSingleton<IKycService, KycService>();
-        service.AddSingleton<IPatientService, PatientService>();
-        service.AddSingleton<IPractitionerService, PractitionerService>();
+        service.AddScoped<IAppointmentService, AppointmentService>();
+        service.AddScoped<IDayService, DayService>();
+        service.AddScoped<IAuthenticationService, AuthenticationService>();
+        service.AddScoped<IKycService, KycService>();
+        service.AddScoped<IPatientService, PatientService>();
+        service.AddScoped<IPractitionerService, PractitionerService>();
 
-        service.AddSingleton<IMediator, Mediator>();
+        service.AddMediatR(o => o.RegisterServicesFromAssemblyContaining<CreateAppointmentHandler>());
         return service;
     }
 }

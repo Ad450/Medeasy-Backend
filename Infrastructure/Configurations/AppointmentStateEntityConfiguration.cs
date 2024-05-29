@@ -10,7 +10,7 @@ public class AppointmentStateEntityTypeConfiguration : IEntityTypeConfiguration<
     {
         builder.Property(x => x.AppointmentStatus).IsRequired();
 
-        builder.HasOne(s => s.Appointment).WithOne(a => a.AppointmentState)
+        builder.HasOne(s => s.Appointment).WithOne(a => a.State)
         .HasForeignKey<AppointmentState>(s => s.AppointmentId);
 
     }

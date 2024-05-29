@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities;
 
-public class MedeasyUser : IdentityUser
+public class MedeasyUser : IdentityUser<Guid>
 {
     public int Age { get; set; }
 }

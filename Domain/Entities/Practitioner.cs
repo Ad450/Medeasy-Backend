@@ -9,6 +9,7 @@ public class Practitioner
     public Kyc? Kyc { get; set; }
     public PractitionerProfilePicture? ProfilePicture { get; set; }
     public PractitionerLocation? Location { get; set; }
+    public ICollection<PractitionerService> PractitionerServices { get; set; } = [];
     public ICollection<Service> Services { get; set; } = [];
     public ICollection<Appointment> Appointments { get; set; } = [];
     public ICollection<Day> Days { get; set; } = [];

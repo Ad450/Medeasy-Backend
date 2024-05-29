@@ -5,7 +5,10 @@ namespace Infrastructure.Extensions;
 
 public static class InfrastructureDependencies
 {
-    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services) =>
-        services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        return services;
+    }
 
 }

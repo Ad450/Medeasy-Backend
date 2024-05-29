@@ -7,7 +7,7 @@ public class Appointment
     public string Name { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public AppointmentState? AppointmentState { get; set; }
+    public AppointmentState? State { get; set; }
     public Guid PractitionerId { get; set; }
     public Practitioner? Practitioner { get; set; }
     public Guid ServiceId { get; set; }

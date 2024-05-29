@@ -186,9 +186,7 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.5, )"
             },
@@ -247,6 +245,9 @@
             "projectReferences": {
               "/Users/duncan/remotown/Medeasy-Backend/Application/Application.csproj": {
                 "projectPath": "/Users/duncan/remotown/Medeasy-Backend/Application/Application.csproj"
+              },
+              "/Users/duncan/remotown/Medeasy-Backend/Infrastructure/Infrastructure.csproj": {
+                "projectPath": "/Users/duncan/remotown/Medeasy-Backend/Infrastructure/Infrastructure.csproj"
               }
             }
           }
@@ -267,6 +268,12 @@
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.5, )"
             },

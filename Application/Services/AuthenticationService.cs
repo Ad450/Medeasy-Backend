@@ -4,6 +4,7 @@ using Application.Dto;
 using Application.Interfaces;
 using Domain.Entities;
 using Domain.Enum;
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -12,27 +13,84 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services;
 
-public class AuthenticationService(UserManager<MedeasyUser> _userManager, IConfiguration _configuration)
+public class AuthenticationService(
+    UserManager<MedeasyUser> _userManager,
+    IConfiguration _configuration,
+    IBaseRepository<MedeasyUser> _userRepository,
+    RoleManager<MedeasyRole> _roleManager
+)
     : IAuthenticationService
 {
+    public async Task<string> InitializeRoles(IList<string> roles)
+    {
+        using var transaction = await _userRepository.GetContext().Database.BeginTransactionAsync();
+        try
+        {
+            foreach (var role in roles)
+            {
+                var roleExist = await _roleManager.RoleExistsAsync(role);
+                if (!roleExist)
+                {
+                    var result = await _roleManager.CreateAsync(new MedeasyRole { Name = role });
+                    if (!result.Succeeded) throw new Exception("could not create roles");
+                    await transaction.CommitAsync();
+                }
+            }
+            return "Roles created";
+        }
+        catch (Exception e)
+        {
+            await transaction.RollbackAsync();
+            throw new Exception("Initializing roles", e);
+        }
+        finally
+        {
+            await transaction.DisposeAsync();
+        }
+    }
+
     public async Task Register(AuthDto authDto)
     {
-        var newUser = new MedeasyUser() { Email = authDto.email };
-        var userExists = await _userManager.FindByEmailAsync(newUser.Email);
-        if (userExists != null)
+        using var transaction = await _userRepository.GetContext().Database.BeginTransactionAsync();
+        try
         {
-            throw new Exception("user exists");
-        }
-        var result = await _userManager.CreateAsync(newUser, authDto.password);
-
-        if (result.Succeeded)
-        {
-            foreach (UserRole role in authDto.Roles)
+            var newUser = new MedeasyUser() { Email = authDto.email, UserName = authDto.email };
+            var userExists = await _userManager.FindByEmailAsync(newUser.Email);
+            if (userExists != null)
             {
-                await _userManager.AddToRoleAsync(newUser, role.ToString());
+                throw new Exception("user exists");
             }
+            var result = await _userManager.CreateAsync(newUser, authDto.password);
+
+            if (result.Succeeded)
+            {
+                foreach (UserRole role in authDto.Roles)
+                {
+                    var roleAdded = await _userManager.AddToRoleAsync(newUser, role.ToString());
+                    if (!roleAdded.Succeeded)
+                    {
+                        await transaction.RollbackAsync();
+                        throw new Exception("role was not added ");
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("new user creation faliled");
+            }
+            await transaction.CommitAsync();
+            return;
         }
-        return;
+        catch (Exception e)
+        {
+            await transaction.RollbackAsync();
+            throw new Exception("exception from registering user", e);
+        }
+        finally
+        {
+            await transaction.DisposeAsync();
+        }
+
     }
 
     public async Task<string> Signin(AuthDto authDto)

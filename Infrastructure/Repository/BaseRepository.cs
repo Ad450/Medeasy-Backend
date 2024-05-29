@@ -2,7 +2,7 @@
 using System.Formats.Asn1;
 using System.Linq.Expressions;
 using System.Reflection;
-using Infrastructure.MeadeasyDbContext;
+using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace Infrastructure.Repository;
 
-public class BaseRepository<T>(MedeasyContext context) : IBaseRepository<T> where T : class
+public class BaseRepository<T>(MedeasyDbContext context) : IBaseRepository<T> where T : class
 
 {
     public async Task Delete(T entity)
@@ -36,7 +36,7 @@ public class BaseRepository<T>(MedeasyContext context) : IBaseRepository<T> wher
         ?? throw new Exception(message: "No match for id");
     }
 
-    public MedeasyContext GetContext()
+    public MedeasyDbContext GetContext()
     {
         return context;
     }

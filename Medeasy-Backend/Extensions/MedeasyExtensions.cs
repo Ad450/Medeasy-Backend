@@ -1,10 +1,12 @@
 using System.Security.Claims;
 using System.Text;
 using Application.Extension;
+using Domain.Entities;
 using Domain.Enum;
 using Infrastructure.Extensions;
-using Infrastructure.MeadeasyDbContext;
+using Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,20 +14,36 @@ namespace Medeasy_Backend.Extensions;
 
 public static class MedeasyBackendExtensions
 {
-    public static IServiceCollection AddMedeasyBackendExtensions(this IServiceCollection service, IConfiguration configuration)
+    public static void AddMedeasyBackendExtensions(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddInfrastructureDependencies();
         service.AddApplicationExtensions();
+    }
+    public static void ConfigureIdentity(this IServiceCollection service, IConfiguration configuration)
+    {
+        service.AddIdentity<MedeasyUser, MedeasyRole>(o =>
+        {
+            o.Password.RequireDigit = false;
+            o.Password.RequireLowercase = false;
+            o.Password.RequireUppercase = false;
+            o.Password.RequireNonAlphanumeric = false;
+            o.Password.RequiredLength = 8;
+            o.User.RequireUniqueEmail = true;
 
-        service.AddEntityFrameworkNpgsql().AddDbContext<MedeasyContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("MedeasyConnectionString"),
-            o => o.MigrationsAssembly("Medeasy-Backend")
-        ));
 
-        return service;
+        })
+          .AddEntityFrameworkStores<MedeasyDbContext>();
+
     }
 
-    public static IServiceCollection AddMedeasyBackendAuthentication(this IServiceCollection service, IConfiguration configuration)
+    // public static void ConfigureDBContext(this IServiceCollection service, IConfiguration configuration)
+    // {
+    //     service.AddDbContext<MedeasyDbContext>(options =>
+    //     {
+    //         options.UseNpgsql(configuration.GetConnectionString("MedeasyConnectionString") ?? throw new Exception("could not retrieve connection string "));
+    //     });
+    // }
+    public static void AddMedeasyBackendAuthentication(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddAuthentication(o =>
             {
@@ -42,16 +60,14 @@ public static class MedeasyBackendExtensions
                             ValidateAudience = false,
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-                            ValidIssuer = configuration.GetRequiredSection("JWT:medeasy").Value!,
+                            ValidIssuer = configuration.GetRequiredSection("JWT:Issuer").Value!,
                         };
                     }
                 );
-
-        return service;
     }
 
 
-    public static IServiceCollection AddMedeasyBackendAuthorization(this IServiceCollection service, IConfiguration configuration)
+    public static void AddMedeasyBackendAuthorization(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddAuthorizationBuilder()
             .AddPolicy("Patient", policy =>
@@ -63,7 +79,6 @@ public static class MedeasyBackendExtensions
                    policy.RequireClaim(ClaimTypes.Role, UserRole.Practitioner.ToString());
                });
 
-        return service;
     }
 
 }

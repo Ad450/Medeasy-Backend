@@ -9,7 +9,6 @@ public class AppointmentEntityTypeConfiguration : IEntityTypeConfiguration<Appoi
     public void Configure(EntityTypeBuilder<Appointment> builder)
     {
         builder.Property(x => x.Name).IsRequired();
-        builder.Property(x => x.AppointmentState).IsRequired();
 
         builder.HasOne(a => a.Patient).WithMany(p => p.Appointments)
         .HasForeignKey(a => a.PatientId);
@@ -23,7 +22,7 @@ public class AppointmentEntityTypeConfiguration : IEntityTypeConfiguration<Appoi
         builder.HasOne(a => a.Day).WithMany(d => d.Appointments)
         .HasForeignKey(a => a.DayId);
 
-        builder.HasOne(a => a.AppointmentState).WithOne(s => s.Appointment)
+        builder.HasOne(a => a.State).WithOne(s => s.Appointment)
         .HasForeignKey<AppointmentState>(a => a.AppointmentId);
 
     }

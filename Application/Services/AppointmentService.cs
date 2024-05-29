@@ -39,7 +39,7 @@ public class AppointmentService(
                 Practitioner = practitioner,
                 Day = day,
                 Service = service,
-                AppointmentState = new AppointmentState { AppointmentStatus = AppointmentStatus.CREATED }
+                State = new AppointmentState { AppointmentStatus = AppointmentStatus.CREATED }
             };
 
             await _appointmentRepository.Save(appointment);

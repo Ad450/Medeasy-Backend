@@ -84,3 +84,5 @@ public record CreateDayParam(
  Guid PractitionerId
 );
 
+
+public record InitializeRolesDto(IList<string> Roles);

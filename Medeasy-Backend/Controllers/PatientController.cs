@@ -13,19 +13,19 @@ public class PatientController : MedeasyBaseController
     {
         return new CreatedResult(location: nameof(CreatePatient), value: await Mediator.Send(new CreatePatientCommand(body)));
     }
-    [HttpPut]
+    [HttpPut("location")]
     public async Task<ActionResult> UpdatePatientLocation([FromBody] UpdateLocationDto body)
     {
         return new AcceptedResult(nameof(UpdatePatientLocation), await Mediator.Send(new UpdatePatientLocationCommand(body)));
     }
 
-    [HttpPut]
+    [HttpPut("profile")]
     public async Task<ActionResult> UpdatePatientProfilePicture([FromBody] UpdateProfilePictureDto body)
     {
         return new OkObjectResult(await Mediator.Send(new UpdatePatientProfileCommand(body)));
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<ActionResult> GetAllPatients([FromQuery] GetAllPatientsDto query)
     {
         return new OkObjectResult(await Mediator.Send(new GetAllPatientsQuery(query)));
@@ -37,7 +37,7 @@ public class PatientController : MedeasyBaseController
         return new OkObjectResult(await Mediator.Send(new GetPatientQuery(query)));
     }
 
-    [HttpGet]
+    [HttpGet("all/appointments")]
     public async Task<ActionResult> GetAllPatientAppointments([FromQuery] GetAllPatientAppointmentsDto query)
     {
         return new OkObjectResult(await Mediator.Send(new GetAllPatientAppointmentsQuery(query)));
