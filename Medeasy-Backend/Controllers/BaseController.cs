@@ -6,7 +6,6 @@ namespace Medeasy_Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class MedeasyBaseController : ControllerBase
 {
     private protected IMediator Mediator

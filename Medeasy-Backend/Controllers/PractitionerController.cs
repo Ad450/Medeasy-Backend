@@ -1,10 +1,11 @@
 using Application.Commands;
 using Application.Dto;
 using Application.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medeasy_Backend.Controllers;
-
+[Authorize(Roles = "Practitioner")]
 public class PractitionerController : MedeasyBaseController
 {
     [HttpPost]

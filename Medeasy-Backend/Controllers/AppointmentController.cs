@@ -1,10 +1,12 @@
 
 using Application.Commands;
 using Application.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medeasy_Backend.Controllers;
 
+[Authorize(Roles = "PatientORPractitioner")]
 public class AppointmentController : MedeasyBaseController
 {
 

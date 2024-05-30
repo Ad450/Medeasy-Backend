@@ -2,13 +2,17 @@
 using Application.Commands;
 using Application.Dto;
 using Application.Queries;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medeasy_Backend.Controllers;
+[Authorize(Policy = "Patient")]
 
 public class PatientController : MedeasyBaseController
 {
-    [HttpPost]
+
+    [HttpPost,]
     public async Task<ActionResult> CreatePatient([FromBody] CreatePatientDto body)
     {
         return new CreatedResult(location: nameof(CreatePatient), value: await Mediator.Send(new CreatePatientCommand(body)));
