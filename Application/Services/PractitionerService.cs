@@ -44,7 +44,7 @@ public class PractitionerService(
         IQueryable<Practitioner> query = dto.searchTerm != null ?
             _practitionerRepository.GetByCondition(
                 SearchUtil.BuildSearchExpression<Practitioner>(
-                    dto.searchTerm, ["FirstName", "Age", "LastName"]
+                    dto.searchTerm, ["FirstName", "LastName"]
                 )) : _practitionerRepository.GetAll();
 
         if (dto.pageNumber != null && dto.pageNumber != null)
