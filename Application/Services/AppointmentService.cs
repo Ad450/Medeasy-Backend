@@ -51,10 +51,6 @@ public class AppointmentService(
             await transaction.RollbackAsync();
             throw new Exception($"Exception: {e} while creating appointment");
         }
-        finally
-        {
-            await transaction.DisposeAsync();
-        }
     }
 
     public IList<Appointment> GetAllPractitionerAppointments(GetAllPractitionerAppointmentsDto dto)

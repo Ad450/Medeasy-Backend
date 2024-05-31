@@ -88,8 +88,3 @@ public static class MedeasyBackendExtensions
 }
 
 
-//TODO
-// add domain , application and infrastructure extensions
-// Configure database connection
-// Add mediator to Service collection
-// Add jwt authentication and authorization

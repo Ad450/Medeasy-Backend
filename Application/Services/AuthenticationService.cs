@@ -43,10 +43,7 @@ public class AuthenticationService(
             await transaction.RollbackAsync();
             throw new Exception("Initializing roles", e);
         }
-        finally
-        {
-            await transaction.DisposeAsync();
-        }
+        
     }
 
     public async Task Register(AuthDto authDto)
@@ -60,6 +57,7 @@ public class AuthenticationService(
             {
                 throw new Exception("user exists");
             }
+
             var result = await _userManager.CreateAsync(newUser, authDto.password);
 
             if (result.Succeeded)
@@ -78,6 +76,7 @@ public class AuthenticationService(
             {
                 throw new Exception("new user creation faliled");
             }
+
             await transaction.CommitAsync();
             return;
         }
@@ -85,10 +84,6 @@ public class AuthenticationService(
         {
             await transaction.RollbackAsync();
             throw new Exception("exception from registering user", e);
-        }
-        finally
-        {
-            await transaction.DisposeAsync();
         }
 
     }
