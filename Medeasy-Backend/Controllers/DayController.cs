@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medeasy_Backend.Controllers;
-[Authorize(Roles = "PatientORPractitioner")]
+[Authorize(Policy = "PatientORPractitioner")]
 public class DayController : MedeasyBaseController
 {
     [HttpPost]

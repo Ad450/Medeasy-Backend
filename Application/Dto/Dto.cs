@@ -22,7 +22,6 @@ public record CreatePractitionerDto(
     string ProfilePicUrl,
     string LocationName
 );
-
 public record GetPractitionerByIdDto(Guid Id);
 public record GetAllPractitionersDto(string? searchTerm, int? pageSize, int? pageNumber, string? orderBy);
 
@@ -48,7 +47,6 @@ public record CreateAppointmentDto(
     Guid PractitionerId,
     Guid ServiceId,
     Guid DayId,
-    string Time,
     string Name
 );
 
@@ -57,6 +55,8 @@ public record GetAppointmentByIdDto(Guid Id);
 public record GetAllPractitionerAppointmentsDto(Guid Id);
 
 public record GetAllPatientAppointmentsDto(Guid Id);
+
+
 
 public record UpdateAppointmentDto(
     Guid AppointmentId,
@@ -86,3 +86,5 @@ public record CreateDayParam(
 
 
 public record InitializeRolesDto(IList<string> Roles);
+
+public record CreateServiceDto(string name);

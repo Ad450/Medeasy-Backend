@@ -30,10 +30,9 @@ public class BaseRepository<T>(MedeasyDbContext context) : IBaseRepository<T> wh
         return context.Set<T>().Where(predicate);
     }
 
-    public async Task<T> GetById(Guid id)
+    public async Task<T?> GetById(Guid id)
     {
-        return await context.Set<T>().FindAsync(id)
-        ?? throw new Exception(message: "No match for id");
+        return await context.Set<T>().FindAsync(id);
     }
 
     public MedeasyDbContext GetContext()

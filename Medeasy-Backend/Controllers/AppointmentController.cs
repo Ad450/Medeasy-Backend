@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medeasy_Backend.Controllers;
 
-[Authorize(Roles = "PatientORPractitioner")]
-public class AppointmentController : MedeasyBaseController
+[Authorize(Policy = "PatientORPractitioner")]
+public class AppointmentController() : MedeasyBaseController
 {
 
+    [HttpPost(), Authorize(Roles = "Patient")]
+    public async Task<ActionResult> CreateAppointment([FromBody] CreateAppointmentDto body)
+    {
+        return new CreatedResult(nameof(CreateAppointment), await Mediator.Send(new CreateAppointmentCommand(body)));
+    }
     [HttpPut()]
     public async Task<ActionResult> UpdateAppointment([FromBody] UpdateAppointmentDto body)
     {

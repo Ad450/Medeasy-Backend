@@ -21,6 +21,7 @@ public class AuthenticationService(
 )
     : IAuthenticationService
 {
+
     public async Task<string> InitializeRoles(IList<string> roles)
     {
         using var transaction = await _userRepository.GetContext().Database.BeginTransactionAsync();
@@ -43,7 +44,7 @@ public class AuthenticationService(
             await transaction.RollbackAsync();
             throw new Exception("Initializing roles", e);
         }
-        
+
     }
 
     public async Task Register(AuthDto authDto)

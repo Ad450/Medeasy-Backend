@@ -18,3 +18,4 @@ public class GetAllPractitionerAppointmentsHandler(IAppointmentService _appointm
         return _appointmentService.GetAllPractitionerAppointments(request.Param);
     }
 }
+

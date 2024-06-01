@@ -12,4 +12,5 @@ public interface IAppointmentService
     public IList<Appointment> GetAllPractitionerAppointments(GetAllPractitionerAppointmentsDto dto);
     public IList<Appointment> GetAllPatientAppointments(GetAllPatientAppointmentsDto dto);
     public Task<Appointment> GetAppointmentById(GetAppointmentByIdDto dto);
+
 }

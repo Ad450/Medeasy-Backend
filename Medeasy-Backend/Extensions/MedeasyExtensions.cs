@@ -70,10 +70,6 @@ public static class MedeasyBackendExtensions
     public static void AddMedeasyBackendAuthorization(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddAuthorizationBuilder()
-            .AddPolicy("PatientORPractitioner", policy =>
-               {
-                   policy.RequireRole(UserRole.Patient.ToString(), UserRole.Practitioner.ToString());
-               })
             .AddPolicy("Patient", policy =>
                {
                    policy.RequireRole(UserRole.Patient.ToString());
@@ -81,6 +77,10 @@ public static class MedeasyBackendExtensions
              .AddPolicy("Practitioner", policy =>
                {
                    policy.RequireRole(UserRole.Practitioner.ToString());
+               })
+            .AddPolicy("PatientORPractitioner", policy =>
+               {
+                   policy.RequireRole(UserRole.Patient.ToString(), UserRole.Practitioner.ToString());
                });
 
     }

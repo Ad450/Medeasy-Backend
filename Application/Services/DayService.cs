@@ -17,18 +17,20 @@ public class DayService(
         using var transaction = await _dayRepository.GetContext().Database.BeginTransactionAsync();
         try
         {
-            var days = dto.Days.Select(async d =>
-            {
-                var practitioner = await _practitionerRepository.GetById(d.PractitionerId)
-                    ?? throw new Exception("practitioner not found");
+            var tasks = dto.Days.Select(async d =>
+           {
+               var practitioner = await _practitionerRepository.GetById(d.PractitionerId)
+                   ?? throw new Exception("practitioner not found");
 
-                return new Day
-                {
-                    Practitioner = practitioner,
-                    DayOfWeek = d.DayOfWeek,
-                    WeekNumber = d.WeekNumber
-                };
-            }).ToList();
+               return new Day
+               {
+                   Practitioner = practitioner,
+                   DayOfWeek = d.DayOfWeek,
+                   WeekNumber = d.WeekNumber
+               };
+           }).ToList();
+
+            var days = await Task.WhenAll(tasks);
 
             await _dayRepository.GetContext().AddRangeAsync(days);
             await _dayRepository.Update();
