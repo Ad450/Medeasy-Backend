@@ -77,7 +77,8 @@ public class PatientService(
     }
     public async Task<Patient> GetPatientById(GetPatientByIdDto dto)
     {
-        return await _patientRepository.GetById(dto.Id);
+        return await _patientRepository.GetById(dto.Id) ??
+            throw new Exception("practitioner not found");
     }
 
     public async Task UpdateProfilePicture(UpdateProfilePictureDto dto)

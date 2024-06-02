@@ -70,7 +70,8 @@ public class PractitionerService(
     }
     public async Task<Practitioner> GetPractitionerById(GetPractitionerByIdDto dto)
     {
-        return await _practitionerRepository.GetById(dto.Id);
+        return await _practitionerRepository.GetById(dto.Id) ??
+            throw new Exception("practitioner not found");
     }
 
     public async Task UpdateProfilePicture(UpdateProfilePictureDto dto)
