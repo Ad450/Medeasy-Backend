@@ -10,10 +10,7 @@ public static class ServiceSeedings
     {
         await context.Database.EnsureCreatedAsync();
 
-        if (context.Services.Any() || context.Roles.Any())
-        {
-            return;   // DB has been seeded
-        }
+        if (context.Services.Any() || context.Roles.Any()) return;
 
         var services = new[]
         {
