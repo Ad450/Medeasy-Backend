@@ -6,7 +6,7 @@ namespace Medeasy_Backend.DatabaseSeedings;
 
 public static class ServiceSeedings
 {
-    public async static Task InitService(MedeasyDbContext context)
+    public static async Task InitService(MedeasyDbContext context)
     {
         await context.Database.EnsureCreatedAsync();
 

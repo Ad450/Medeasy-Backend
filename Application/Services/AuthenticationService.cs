@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Application.Dto;
 using Application.Interfaces;
@@ -89,7 +90,7 @@ public class AuthenticationService(
 
     }
 
-    public async Task<string> Signin(AuthDto authDto)
+    public async Task<object> Signin(AuthDto authDto)
     {
         var user = await _userManager.FindByEmailAsync(authDto.email)
             ?? throw new Exception("user not found");
@@ -99,32 +100,85 @@ public class AuthenticationService(
         var roles = await _userManager.GetRolesAsync(user)
                 ?? throw new Exception("no role found for user"); ;
 
-        var token = GenerateJWTToken(user, roles!);
-        return token;
+        var accessToken = GenerateJwtToken(user, roles!);
+        var refreshToken = GenerateRefreshToken();
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(10);
+        await _userManager.UpdateAsync(user);
+
+        return new
+        {
+            AcessToken = accessToken,
+            RefreshToken = refreshToken
+        };
     }
 
-    public async Task Signout()
+    public Task Signout()
     {
         throw new Exception();
     }
 
-    private string GenerateJWTToken(MedeasyUser user, IList<string> roles)
+    public async Task<object> RefreshToken(string expiredAccessToken, string oldRefreshToken)
     {
+        var identity = await GetIdentityFromExpiredToken(expiredAccessToken);
+        var userEmail = identity.Claims
+            .Where(c => c.Type == ClaimTypes.Email)
+            .Select(c => c.Value).ToList()
+            .FirstOrDefault() ?? throw new Exception("could not find claim: Email in token");
+
+        var user = await _userManager.FindByEmailAsync(userEmail)
+                ?? throw new Exception("user not found");
+
+        if (!IsRefreshTokenValid(user, oldRefreshToken)) throw new Exception("Token Invalid");
+
+        var roles = identity.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+        var accessToken = GenerateJwtToken(user, roles);
+        var refreshToken = GenerateRefreshToken();
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(10);
+        await _userManager.UpdateAsync(user);
+
+        return new
+        {
+            AcessToken = accessToken,
+            RefreshToken = refreshToken
+        };
+    }
+
+    private bool IsRefreshTokenValid(MedeasyUser user, string refreshToken)
+    {
+        if (user.RefreshToken != refreshToken || DateTime.UtcNow > user.RefreshTokenExpiry)
+            return false;
+        return true;
+    }
+
+    private string? GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
+    }
+    private string GenerateJwtToken(MedeasyUser user, IList<string> roles)
+    {
+        if (roles.IsNullOrEmpty()) throw new Exception("Add at least one role");
         IDictionary<string, object> claims = new Dictionary<string, object>
         {
             { ClaimTypes.Sid, user.Id},
+            { ClaimTypes.Email, user.Email!},
         };
         foreach (var role in roles)
         {
-            if (role != null)
-            {
-                claims[ClaimTypes.Role] = role;
-            }
+            claims[ClaimTypes.Role] = role;
         }
         var securityTokenDescriptor = new SecurityTokenDescriptor()
         {
             Issuer = _configuration.GetSection("JWT:Issuer").Value,
-            Expires = DateTime.UtcNow.AddDays(1),
+            Expires = DateTime.UtcNow.AddSeconds(5),
             Audience = _configuration.GetSection("JWT:Audience").Value,
             Claims = claims,
             SigningCredentials = new SigningCredentials(
@@ -137,4 +191,35 @@ public class AuthenticationService(
         var token = new JsonWebTokenHandler().CreateToken(securityTokenDescriptor);
         return token;
     }
+
+    private async Task<ClaimsIdentity> GetIdentityFromExpiredToken(string? token)
+    {
+        var validationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateLifetime = false,
+            ValidateAudience = true,
+            ValidIssuer = _configuration.GetSection("JWT:Issuer").Value,
+            ValidAudience = _configuration.GetSection("JWT:Audience").Value,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey
+                       (Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:SigningCred").Value!))
+        };
+
+        var tokenHandler = new JsonWebTokenHandler();
+        var principal = await tokenHandler.ValidateTokenAsync(token, validationParameters);
+        //        if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+        //            throw new SecurityTokenException("Invalid token");
+        //
+        //        return principal;
+        if (principal == null ||
+            !principal.IsValid ||
+            principal.SecurityToken.Issuer != _configuration.GetSection("JWT:Issuer").Value
+        ) throw new Exception("Invalid token");
+
+        return principal.ClaimsIdentity;
+
+    }
+
+
 }

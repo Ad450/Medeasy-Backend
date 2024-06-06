@@ -28,4 +28,12 @@ public class AuthenticationController : MedeasyBaseController
         return new OkObjectResult(await Mediator.Send(new SigninUserCommand(body)));
     }
 
+    [AllowAnonymous]
+    [HttpPost("refreshToken")]
+    public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenDto body)
+    {
+        return new OkObjectResult(await Mediator.Send(new RefreshTokenCommand(body)));
+    }
+
+
 }
