@@ -15,7 +15,7 @@ public record CreatePatientDto(
 
 
 public record GetPatientByIdDto(Guid Id);
-public record GetAllPatientsDto(string? searchTerm, int? pageSize, int? pageNumber, string? orderBy);
+public record PaginationDto(string? searchTerm, int? pageSize, int? pageNumber, string? orderBy);
 
 public record CreatePractitionerDto(
     string FirstName,
@@ -25,8 +25,6 @@ public record CreatePractitionerDto(
     string LocationName
 );
 public record GetPractitionerByIdDto(Guid Id);
-public record GetAllPractitionersDto(string? searchTerm, int? pageSize, int? pageNumber, string? orderBy);
-
 public record GetPractitionerServicesDto(Guid Id);
 public record UpdateLocationDto(
     Guid Id,

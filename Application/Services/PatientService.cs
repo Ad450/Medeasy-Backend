@@ -1,6 +1,4 @@
-using System.Data.Common;
 using System.Linq.Expressions;
-using System.Reflection.Metadata;
 using Application.Dto;
 using Application.Interfaces;
 using Application.Utils;
@@ -41,28 +39,15 @@ public class PatientService(
 
     }
 
-    public IList<Patient> GetAllPatients(GetAllPatientsDto dto)
+    public IList<Patient> GetAllPatients(PaginationDto dto)
     {
 
-        if (dto.searchTerm == null && dto.pageNumber == null)
-            throw new Exception("either search or provide page numner");
-
-        var query = dto.searchTerm != null ?
-            _patientRepository.GetByCondition(
-                SearchUtil.BuildSearchExpression<Patient>(
-                    dto.searchTerm, ["FirstName", "Age", "LastName"]
-                )) : _patientRepository.GetAll();
-
-
-        if (dto.pageNumber != null && dto.pageNumber != null)
-        {
-            var skip = (dto.pageNumber - 1) * dto.pageSize;
-            query = query
-                        .Skip((int)skip!)
-                        .Take((int)dto.pageSize!);
-        }
-
-        return [.. query.OrderBy(GetOrderby(dto.orderBy))];
+        return SearchUtil.FetchByPagination(
+            repository: _patientRepository,
+            searchFields: ["FirstName", "LastName"],
+            dto: dto,
+            orderBy: GetOrderby(dto.orderBy)
+        );
     }
     private Expression<Func<Patient, object>> GetOrderby(string? orderBy)
     {

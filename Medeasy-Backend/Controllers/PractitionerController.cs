@@ -27,7 +27,7 @@ public class PractitionerController : MedeasyBaseController
     }
 
     [HttpGet("all")]
-    public async Task<ActionResult> GetAllPractitioners([FromQuery] GetAllPractitionersDto query)
+    public async Task<ActionResult> GetAllPractitioners([FromQuery] PaginationDto query)
     {
         return new OkObjectResult(await Mediator.Send(new GetAllPractitionersQuery(query)));
     }

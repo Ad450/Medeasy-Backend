@@ -30,7 +30,7 @@ public class PatientController : MedeasyBaseController
     }
 
     [HttpGet("all")]
-    public async Task<ActionResult> GetAllPatients([FromQuery] GetAllPatientsDto query)
+    public async Task<ActionResult> GetAllPatients([FromQuery] PaginationDto query)
     {
         return new OkObjectResult(await Mediator.Send(new GetAllPatientsQuery(query)));
     }

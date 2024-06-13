@@ -7,7 +7,7 @@ public interface IPractitionerService
 {
     public Task<Guid> CreatePractitioner(CreatePractitionerDto dto);
     public Task<Practitioner> GetPractitionerById(GetPractitionerByIdDto dto);
-    public IList<Practitioner> GetAllPractitioners(GetAllPractitionersDto dto);
+    public IList<Practitioner> GetAllPractitioners(PaginationDto dto);
 
     public Task UpdateProfilePicture(UpdateProfilePictureDto dto);
     public Task UpdatePractitionerLocation(UpdateLocationDto dto);

@@ -36,26 +36,14 @@ public class PractitionerService(
         return newPractitioner.Id;
     }
 
-    public IList<Practitioner> GetAllPractitioners(GetAllPractitionersDto dto)
+    public IList<Practitioner> GetAllPractitioners(PaginationDto dto)
     {
-        if (dto.searchTerm == null && dto.pageNumber == null)
-            throw new Exception("either search or provide page numner");
-
-        IQueryable<Practitioner> query = dto.searchTerm != null ?
-            _practitionerRepository.GetByCondition(
-                SearchUtil.BuildSearchExpression<Practitioner>(
-                    dto.searchTerm, ["FirstName", "LastName"]
-                )) : _practitionerRepository.GetAll();
-
-        if (dto.pageNumber != null && dto.pageNumber != null)
-        {
-            var skip = (dto.pageNumber - 1) * dto.pageSize;
-            query = query
-                        .Skip((int)skip!)
-                        .Take((int)dto.pageSize!);
-        }
-
-        return [.. query.OrderBy(GetOrderby(dto.orderBy))];
+        return SearchUtil.FetchByPagination(
+            repository: _practitionerRepository,
+            searchFields: ["FirstName", "LastName"],
+            dto: dto,
+            orderBy: GetOrderby(dto.orderBy)
+        );
     }
     private Expression<Func<Practitioner, object>> GetOrderby(string? orderBy)
     {

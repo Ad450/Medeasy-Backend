@@ -1,4 +1,6 @@
 using System.Linq.Expressions;
+using Application.Dto;
+using Infrastructure.Repository;
 
 namespace Application.Utils;
 
@@ -22,5 +24,34 @@ public static class SearchUtil
 
         return Expression.Lambda<Func<T, bool>>(body, parameter);
     }
+
+    public static IList<T> FetchByPagination<T>(
+        IBaseRepository<T> repository,
+        string[] searchFields,
+        PaginationDto dto,
+        Expression<Func<T, object>> orderBy
+    ) where T : class
+    {
+        if (dto.searchTerm == null && dto.pageNumber == null)
+            throw new Exception("either search or provide page numner");
+
+        var query = dto.searchTerm != null ?
+            repository.GetByCondition(
+                SearchUtil.BuildSearchExpression<T>(
+                    dto.searchTerm, searchFields
+                )) : repository.GetAll();
+
+
+        if (dto.pageNumber != null && dto.pageNumber != null)
+        {
+            var skip = dto.pageNumber != 0 ? (dto.pageNumber - 1) * dto.pageSize : dto.pageSize;
+            query = query
+                        .Skip((int)skip!)
+                        .Take((int)dto.pageSize!);
+        }
+
+        return [.. query.OrderBy(orderBy)];
+    }
+
 
 }

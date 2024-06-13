@@ -7,9 +7,9 @@ using MediatR;
 
 namespace Application.Queries;
 
-public class GetAllPatientsQuery(GetAllPatientsDto dto) : IRequest<IList<Patient>>
+public class GetAllPatientsQuery(PaginationDto dto) : IRequest<IList<Patient>>
 {
-    public GetAllPatientsDto Param { get; } = dto;
+    public PaginationDto Param { get; } = dto;
 }
 
 public class GetAllPatientsHandler(IPatientService _patientService) : IRequestHandler<GetAllPatientsQuery, IList<Patient>>

@@ -5,9 +5,9 @@ using MediatR;
 
 namespace Application.Queries;
 
-public class GetAllPractitionersQuery(GetAllPractitionersDto dto) : IRequest<IList<Practitioner>>
+public class GetAllPractitionersQuery(PaginationDto dto) : IRequest<IList<Practitioner>>
 {
-    public GetAllPractitionersDto Param { get; } = dto;
+    public PaginationDto Param { get; } = dto;
 }
 
 public class GetAllPractitionersHandler(IPractitionerService _practitionerService) : IRequestHandler<GetAllPractitionersQuery, IList<Practitioner>>
