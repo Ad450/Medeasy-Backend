@@ -64,7 +64,7 @@ public class PractitionerService(
 
     public async Task UpdateProfilePicture(UpdateProfilePictureDto dto)
     {
-        var profilePicture = await _practitionerProfilePictureRepository.GetByCondition((p) => p.PractitionerId == dto.Id).FirstOrDefaultAsync()
+        var profilePicture = await _practitionerProfilePictureRepository.GetById(dto.Id)
              ?? throw new Exception("profile picture could not be retrieved");
 
         profilePicture.PictureUrl = dto.ProfilePicUrl;
@@ -73,7 +73,7 @@ public class PractitionerService(
 
     public async Task UpdatePractitionerLocation(UpdateLocationDto dto)
     {
-        var location = await _practitionerLocationRepository.GetByCondition((p) => p.PractitionerId == dto.Id).FirstOrDefaultAsync()
+        var location = await _practitionerLocationRepository.GetById(dto.Id)
               ?? throw new Exception("Location could not be retrieved");
 
         location.LocationName = dto.LocationName;

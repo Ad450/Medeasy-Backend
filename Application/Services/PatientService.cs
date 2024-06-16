@@ -68,7 +68,7 @@ public class PatientService(
 
     public async Task UpdateProfilePicture(UpdateProfilePictureDto dto)
     {
-        var profilePicture = await _patientProfileRepository.GetByCondition((p) => p.PatientId == dto.Id).FirstOrDefaultAsync()
+        var profilePicture = await _patientProfileRepository.GetById(dto.Id)
              ?? throw new Exception("profile picture could not be retrieved");
 
         profilePicture.PictureUrl = dto.ProfilePicUrl;
@@ -77,7 +77,7 @@ public class PatientService(
 
     public async Task UpdatePatientLocation(UpdateLocationDto dto)
     {
-        var location = await _patientLocationRepository.GetByCondition((p) => p.PatientId == dto.Id).FirstOrDefaultAsync()
+        var location = await _patientLocationRepository.GetById(dto.Id)
               ?? throw new Exception("Location could not be retrieved");
 
         location.LocationName = dto.LocationName;

@@ -100,18 +100,7 @@ public class AuthenticationService(
         var roles = await _userManager.GetRolesAsync(user)
                 ?? throw new Exception("no role found for user"); ;
 
-        var accessToken = GenerateJwtToken(user, roles!);
-        var refreshToken = GenerateRefreshToken();
-
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(10);
-        await _userManager.UpdateAsync(user);
-
-        return new
-        {
-            AcessToken = accessToken,
-            RefreshToken = refreshToken
-        };
+        return await GetTokens(user, [.. roles]);
     }
 
     public Task Signout()
@@ -133,6 +122,12 @@ public class AuthenticationService(
         if (!IsRefreshTokenValid(user, oldRefreshToken)) throw new Exception("Token Invalid");
 
         var roles = identity.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+
+        return await GetTokens(user, roles);
+    }
+
+    private async Task<object> GetTokens(MedeasyUser user, List<string> roles)
+    {
         var accessToken = GenerateJwtToken(user, roles);
         var refreshToken = GenerateRefreshToken();
 
@@ -208,10 +203,7 @@ public class AuthenticationService(
 
         var tokenHandler = new JsonWebTokenHandler();
         var principal = await tokenHandler.ValidateTokenAsync(token, validationParameters);
-        //        if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-        //            throw new SecurityTokenException("Invalid token");
-        //
-        //        return principal;
+
         if (principal == null ||
             !principal.IsValid ||
             principal.SecurityToken.Issuer != _configuration.GetSection("JWT:Issuer").Value
