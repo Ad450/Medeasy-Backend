@@ -1,5 +1,4 @@
 
-using Domain.Entities;
 using Infrastructure.Context;
 using Medeasy_Backend.DatabaseSeedings;
 using Medeasy_Backend.Extensions;
