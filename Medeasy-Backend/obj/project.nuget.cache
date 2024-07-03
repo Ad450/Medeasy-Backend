@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OBZYH6KtHOWTcOomgCdOdcvkcsf4fRff/fCZxlWm92bhDPLc+D8bVQdVz+QilJZuQgdRMvCLHH0tJfRLhHlLYA==",
+  "dgSpecHash": "c341gNgBodOc0mu0S7wdGb6QD+Z64GDnyTv0O0QbY/VLaTrkViSDoK7sbAEy7pwbNfHWMJsm+oMLgyMF53Di4w==",
   "success": true,
   "projectFilePath": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/Medeasy-Backend.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "/Users/duncan/.nuget/packages/microsoft.identitymodel.protocols/7.1.2/microsoft.identitymodel.protocols.7.1.2.nupkg.sha512",
     "/Users/duncan/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/7.1.2/microsoft.identitymodel.protocols.openidconnect.7.1.2.nupkg.sha512",
     "/Users/duncan/.nuget/packages/microsoft.identitymodel.tokens/7.5.2/microsoft.identitymodel.tokens.7.5.2.nupkg.sha512",
+    "/Users/duncan/.nuget/packages/microsoft.net.build.containers/8.0.302/microsoft.net.build.containers.8.0.302.nupkg.sha512",
     "/Users/duncan/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/duncan/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
     "/Users/duncan/.nuget/packages/npgsql/8.0.3/npgsql.8.0.3.nupkg.sha512",
@@ -64,7 +65,8 @@
     "/Users/duncan/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "/Users/duncan/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/duncan/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
-    "/Users/duncan/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512"
+    "/Users/duncan/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
+    "/Users/duncan/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.4/microsoft.netcore.app.host.linux-x64.8.0.4.nupkg.sha512"
   ],
   "logs": []
 }

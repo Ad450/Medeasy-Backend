@@ -1,2 +1,6 @@
 bin
 obj
+
+# IDE and Editors
+.idea
+.vscode
