@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "c341gNgBodOc0mu0S7wdGb6QD+Z64GDnyTv0O0QbY/VLaTrkViSDoK7sbAEy7pwbNfHWMJsm+oMLgyMF53Di4w==",
+  "dgSpecHash": "/KgDxy08S/45Sda+ujiFvqrTkvMzAWVkDV/djSuCfn7j0OiqDdlXpF/BIo+eUlWT+T/8sj6D6mK8RWDgo12saA==",
   "success": true,
   "projectFilePath": "/Users/duncan/remotown/Medeasy-Backend/Medeasy-Backend/Medeasy-Backend.csproj",
   "expectedPackageFiles": [
@@ -65,8 +65,7 @@
     "/Users/duncan/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "/Users/duncan/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/duncan/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
-    "/Users/duncan/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
-    "/Users/duncan/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.4/microsoft.netcore.app.host.linux-x64.8.0.4.nupkg.sha512"
+    "/Users/duncan/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

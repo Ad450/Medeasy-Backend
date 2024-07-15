@@ -7,16 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddMedeasyBackendExtensions(builder.Configuration);
-// builder.Services.ConfigureDBContext(builder.Configuration);
-
-builder.Services.AddDbContext<MedeasyDbContext>();
-
-builder.Services.ConfigureIdentity(builder.Configuration);
-
-builder.Services.AddMedeasyBackendAuthentication(builder.Configuration);
-
-builder.Services.AddMedeasyBackendAuthorization(builder.Configuration);
+builder.Services
+    .AddMedeasyBackendExtensions(builder.Configuration)
+    .AddDbContext<MedeasyDbContext>()
+    .ConfigureIdentity(builder.Configuration)
+    .AddMedeasyBackendAuthentication(builder.Configuration)
+    .AddMedeasyBackendAuthorization(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,3 +56,5 @@ app.MapControllers();
 
 app.Run();
 
+
+//html/agilitypack

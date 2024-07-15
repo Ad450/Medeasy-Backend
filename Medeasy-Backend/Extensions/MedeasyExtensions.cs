@@ -13,12 +13,13 @@ namespace Medeasy_Backend.Extensions;
 
 public static class MedeasyBackendExtensions
 {
-    public static void AddMedeasyBackendExtensions(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection AddMedeasyBackendExtensions(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddInfrastructureDependencies();
         service.AddApplicationExtensions();
+        return service;
     }
-    public static void ConfigureIdentity(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection ConfigureIdentity(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddIdentity<MedeasyUser, MedeasyRole>(o =>
         {
@@ -33,6 +34,8 @@ public static class MedeasyBackendExtensions
         })
           .AddEntityFrameworkStores<MedeasyDbContext>();
 
+        return service;
+
     }
 
     // public static void ConfigureDBContext(this IServiceCollection service, IConfiguration configuration)
@@ -42,7 +45,7 @@ public static class MedeasyBackendExtensions
     //         options.UseNpgsql(configuration.GetConnectionString("MedeasyConnectionString") ?? throw new Exception("could not retrieve connection string "));
     //     });
     // }
-    public static void AddMedeasyBackendAuthentication(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection AddMedeasyBackendAuthentication(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddAuthentication(o =>
             {
@@ -63,10 +66,11 @@ public static class MedeasyBackendExtensions
                         };
                     }
                 );
+        return service;
     }
 
 
-    public static void AddMedeasyBackendAuthorization(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection AddMedeasyBackendAuthorization(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddAuthorizationBuilder()
             .AddPolicy("Patient", policy =>
@@ -81,10 +85,11 @@ public static class MedeasyBackendExtensions
                {
                    policy.RequireRole(UserRole.Patient.ToString(), UserRole.Practitioner.ToString());
                });
+        return service;
 
     }
 
-    public static void ConfigureSwaggerWithAuthorization(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureSwaggerWithAuthorization(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSwaggerGen(c =>
         {
@@ -111,6 +116,7 @@ public static class MedeasyBackendExtensions
                     }
             });
         });
+        return services;
     }
 
 }
