@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using System.Text;
 using Application.Extension;
 using Domain.Entities;
@@ -8,6 +7,8 @@ using Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Application.Utils;
+
 
 namespace Medeasy_Backend.Extensions;
 
@@ -47,6 +48,11 @@ public static class MedeasyBackendExtensions
     // }
     public static IServiceCollection AddMedeasyBackendAuthentication(this IServiceCollection service, IConfiguration configuration)
     {
+        var jwtSettings = configuration.GetSection("JWT").Get<JwtSettings>();
+
+        var signingCredentials = jwtSettings!.SigningCredentials;
+        var issuer = jwtSettings!.Issuer;
+
         service.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,12 +63,12 @@ public static class MedeasyBackendExtensions
                         {
                             ValidateIssuer = true,
                             IssuerSigningKey = new SymmetricSecurityKey(
-                                Encoding.UTF8.GetBytes(configuration.GetRequiredSection("JWT:SigningCred").Value!)
+                                Encoding.UTF8.GetBytes(signingCredentials)
                             ),
                             ValidateAudience = false,
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-                            ValidIssuer = configuration.GetRequiredSection("JWT:Issuer").Value!,
+                            ValidIssuer = issuer,
                         };
                     }
                 );

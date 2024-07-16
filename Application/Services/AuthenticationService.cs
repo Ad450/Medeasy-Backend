@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Application.Dto;
 using Application.Interfaces;
+using Application.Utils;
 using Domain.Entities;
 using Domain.Enum;
 using Infrastructure.Repository;
@@ -160,6 +161,7 @@ public class AuthenticationService(
     }
     private string GenerateJwtToken(MedeasyUser user, IList<string> roles)
     {
+
         if (roles.IsNullOrEmpty()) throw new Exception("Add at least one role");
         IDictionary<string, object> claims = new Dictionary<string, object>
         {
@@ -178,7 +180,7 @@ public class AuthenticationService(
             Claims = claims,
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:SigningCred").Value!)),
+                    (Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:SigningCredentials").Value!)),
                 SecurityAlgorithms.HmacSha256
             )
 
@@ -189,6 +191,7 @@ public class AuthenticationService(
 
     private async Task<ClaimsIdentity> GetIdentityFromExpiredToken(string? token)
     {
+
         var validationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
@@ -198,7 +201,7 @@ public class AuthenticationService(
             ValidAudience = _configuration.GetSection("JWT:Audience").Value,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey
-                       (Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:SigningCred").Value!))
+                       (Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:SigningCredentials").Value!))
         };
 
         var tokenHandler = new JsonWebTokenHandler();
